@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>毎日のトレーニング記録</title>
+
+<!-- iOSホーム画面追加(PWA風)対応 -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="トレーニング記録">
+<meta name="theme-color" content="#1f8a70">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+
+<style>
+  :root{
+    --main:#1f8a70;
+    --main-dark:#166e59;
+    --accent:#ff8c42;
+    --bg:#f4f7f6;
+    --card:#ffffff;
+    --text:#233;
+    --muted:#7a8a86;
+    --border:#e1e8e6;
+    --up:#e0663e;
+    --down:#2f8fd0;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",-apple-system,BlinkMacSystemFont,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    padding-bottom:calc(60px + env(safe-area-inset-bottom));
+    padding-left:env(safe-area-inset-left);
+    padding-right:env(safe-area-inset-right);
+  }
+  header{
+    background:linear-gradient(135deg,var(--main),var(--main-dark));
+    color:#fff;
+    padding:calc(20px + env(safe-area-inset-top)) 16px 20px;
+    text-align:center;
+  }
+  header h1{margin:0;font-size:1.4rem;letter-spacing:.02em;}
+  header p{margin:4px 0 0;font-size:.8rem;opacity:.85;}
+  main{max-width:920px;margin:0 auto;padding:16px;}
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:16px;
+    margin-bottom:16px;
+    box-shadow:0 1px 3px rgba(0,0,0,.04);
+  }
+  .card h2{
+    margin:0 0 12px;
+    font-size:1.05rem;
+    color:var(--main-dark);
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .field-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:10px 14px;
+  }
+  .field{display:flex;flex-direction:column;gap:4px;}
+  .field label{font-size:.78rem;color:var(--muted);}
+  .field input, .field select, .field textarea{
+    padding:8px 9px;
+    border:1px solid var(--border);
+    border-radius:7px;
+    font-size:.92rem;
+    background:#fbfdfc;
+    font-family:inherit;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:none;
+    border-color:var(--main);
+    background:#fff;
+  }
+  .subgroup{margin-top:14px;}
+  .subgroup-title{font-size:.85rem;color:var(--main-dark);font-weight:600;margin-bottom:8px;border-left:3px solid var(--main);padding-left:8px;}
+  .dyn-row{display:flex;gap:8px;margin-bottom:8px;align-items:center;flex-wrap:wrap;}
+  .dyn-row input[type=time]{width:110px;}
+  .dyn-row input[type=text]{flex:1;min-width:160px;}
+  .dyn-row .remove-btn{
+    background:#fff0ec;color:var(--up);border:1px solid #f3c9bd;border-radius:6px;
+    padding:6px 10px;cursor:pointer;font-size:.8rem;
+  }
+  .add-btn{
+    background:#eaf5f1;color:var(--main-dark);border:1px solid #bfe3d6;
+    border-radius:7px;padding:6px 12px;cursor:pointer;font-size:.82rem;margin-top:2px;
+  }
+  .add-btn:hover, .remove-btn:hover{filter:brightness(0.95);}
+  .actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;}
+  button.primary{
+    background:var(--main);color:#fff;border:none;border-radius:8px;
+    padding:10px 22px;font-size:.95rem;cursor:pointer;font-weight:600;
+  }
+  button.primary:hover{background:var(--main-dark);}
+  button.secondary{
+    background:#fff;color:var(--muted);border:1px solid var(--border);border-radius:8px;
+    padding:10px 18px;font-size:.9rem;cursor:pointer;
+  }
+  .bmi-display{
+    display:flex;align-items:center;gap:8px;padding:8px 10px;background:#eaf5f1;
+    border-radius:8px;font-size:.9rem;color:var(--main-dark);
+  }
+  .bmi-display b{font-size:1.1rem;}
+  #settings-bar{
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:space-between;
+  }
+  #settings-bar .field{flex-direction:row;align-items:center;}
+  #settings-bar .field label{white-space:nowrap;}
+  #settings-bar input{width:90px;}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;}
+  .toolbar button{
+    background:#fff;border:1px solid var(--border);border-radius:7px;padding:6px 12px;
+    font-size:.8rem;cursor:pointer;color:var(--muted);
+  }
+  .record{
+    border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:12px;background:#fdfefe;
+  }
+  .record-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+  .record-date{font-weight:700;font-size:1rem;color:var(--main-dark);}
+  .record-actions button{
+    background:none;border:none;cursor:pointer;font-size:.8rem;color:var(--muted);
+    text-decoration:underline;margin-left:8px;
+  }
+  .metrics-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;}
+  .metric{
+    background:#f6f9f8;border-radius:8px;padding:6px 10px;font-size:.8rem;min-width:90px;
+  }
+  .metric .label{color:var(--muted);font-size:.7rem;display:block;}
+  .metric .value{font-size:.95rem;font-weight:600;}
+  .diff{font-size:.72rem;margin-left:4px;}
+  .diff.up{color:var(--up);}
+  .diff.down{color:var(--down);}
+  .diff.flat{color:var(--muted);}
+  details{margin-top:10px;}
+  summary{cursor:pointer;font-size:.82rem;color:var(--main-dark);}
+  .detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-top:8px;font-size:.8rem;}
+  .detail-grid div{background:#f6f9f8;border-radius:6px;padding:6px 8px;}
+  .detail-grid span{display:block;color:var(--muted);font-size:.68rem;}
+  ul.simple-list{margin:6px 0 0;padding-left:18px;font-size:.82rem;}
+  ul.simple-list li{margin-bottom:2px;}
+  #empty-msg{text-align:center;color:var(--muted);padding:30px 0;font-size:.9rem;}
+  .memo-box{margin-top:8px;font-size:.82rem;background:#f6f9f8;border-radius:6px;padding:8px;}
+  @media(max-width:520px){
+    .record-head{flex-direction:column;align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>毎日のトレーニング記録</h1>
+  <p>体調・トレーニング・食事をまとめて記録するアプリ</p>
+</header>
+
+<main>
+  <section class="card" id="settings-card">
+    <h2>⚙️ 設定</h2>
+    <div id="settings-bar">
+      <div class="field">
+        <label for="height-input">身長 (cm) ※BMI自動計算に使用</label>
+        <input type="number" id="height-input" step="0.1" min="0" placeholder="例: 160">
+      </div>
+      <div class="toolbar">
+        <button type="button" id="export-json-btn">JSONエクスポート</button>
+        <button type="button" id="export-csv-btn">CSVエクスポート</button>
+        <button type="button" id="import-btn">JSONインポート</button>
+        <input type="file" id="import-file" accept="application/json" style="display:none;">
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 id="form-title">📝 記録を入力</h2>
+    <form id="record-form">
+      <div class="field-grid">
+        <div class="field">
+          <label for="f-date">日付 *</label>
+          <input type="date" id="f-date" required>
+        </div>
+        <div class="field">
+          <label for="f-bp-sys">血圧 上 (mmHg)</label>
+          <input type="number" id="f-bp-sys" min="0">
+        </div>
+        <div class="field">
+          <label for="f-bp-dia">血圧 下 (mmHg)</label>
+          <input type="number" id="f-bp-dia" min="0">
+        </div>
+        <div class="field">
+          <label for="f-pulse">脈拍 (回/分)</label>
+          <input type="number" id="f-pulse" min="0">
+        </div>
+        <div class="field">
+          <label for="f-weight">体重 (kg)</label>
+          <input type="number" id="f-weight" step="0.1" min="0">
+        </div>
+        <div class="field">
+          <label for="f-bodyfat">体脂肪率 (%)</label>
+          <input type="number" id="f-bodyfat" step="0.1" min="0">
+        </div>
+        <div class="field">
+          <label>BMI（自動計算）</label>
+          <div class="bmi-display">現在値: <b id="bmi-value">-</b></div>
+        </div>
+        <div class="field">
+          <label for="f-temp">体温 (℃)</label>
+          <input type="number" id="f-temp" step="0.1" min="0">
+        </div>
+        <div class="field">
+          <label for="f-steps">歩数 (歩)</label>
+          <input type="number" id="f-steps" min="0">
+        </div>
+        <div class="field">
+          <label for="f-sleep-hours">睡眠時間 (h)</label>
+          <input type="number" id="f-sleep-hours" step="0.1" min="0">
+        </div>
+        <div class="field">
+          <label for="f-sleep-quality">睡眠の質</label>
+          <select id="f-sleep-quality">
+            <option value="">選択なし</option>
+            <option value="とても良い">とても良い</option>
+            <option value="良い">良い</option>
+            <option value="普通">普通</option>
+            <option value="悪い">悪い</option>
+            <option value="とても悪い">とても悪い</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="subgroup">
+        <div class="subgroup-title">ボディサイズ (cm)</div>
+        <div class="field-grid">
+          <div class="field"><label for="f-bust">バスト</label><input type="number" step="0.1" id="f-bust"></div>
+          <div class="field"><label for="f-underbust">アンダーバスト</label><input type="number" step="0.1" id="f-underbust"></div>
+          <div class="field"><label for="f-waist">ウエスト</label><input type="number" step="0.1" id="f-waist"></div>
+          <div class="field"><label for="f-hip">ヒップ</label><input type="number" step="0.1" id="f-hip"></div>
+          <div class="field"><label for="f-thigh-l">太もも（左）</label><input type="number" step="0.1" id="f-thigh-l"></div>
+          <div class="field"><label for="f-thigh-r">太もも（右）</label><input type="number" step="0.1" id="f-thigh-r"></div>
+          <div class="field"><label for="f-calf-l">ふくらはぎ（左）</label><input type="number" step="0.1" id="f-calf-l"></div>
+          <div class="field"><label for="f-calf-r">ふくらはぎ（右）</label><input type="number" step="0.1" id="f-calf-r"></div>
+          <div class="field"><label for="f-arm-l">二の腕（左）</label><input type="number" step="0.1" id="f-arm-l"></div>
+          <div class="field"><label for="f-arm-r">二の腕（右）</label><input type="number" step="0.1" id="f-arm-r"></div>
+        </div>
+      </div>
+
+      <div class="subgroup">
+        <div class="subgroup-title">食事内容と時間</div>
+        <div id="meals-container"></div>
+        <button type="button" class="add-btn" id="add-meal-btn">＋ 食事を追加</button>
+      </div>
+
+      <div class="subgroup">
+        <div class="subgroup-title">トレーニング内容と時間</div>
+        <div id="trainings-container"></div>
+        <button type="button" class="add-btn" id="add-training-btn">＋ トレーニングを追加</button>
+      </div>
+
+      <div class="subgroup">
+        <div class="subgroup-title">体調メモ</div>
+        <div class="field">
+          <textarea id="f-memo" rows="2" placeholder="体調や気分など自由に記録"></textarea>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="primary" id="submit-btn">記録を保存</button>
+        <button type="button" class="secondary" id="cancel-edit-btn" style="display:none;">編集をキャンセル</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="card">
+    <h2>📋 記録一覧（前日比較つき）</h2>
+    <div id="records-list"></div>
+    <div id="empty-msg" style="display:none;">まだ記録がありません。上のフォームから入力してください。</div>
+  </section>
+</main>
+
+<script>
+(function(){
+  const SETTINGS_KEY = "trainingLog.settings";
+  const RECORDS_KEY = "trainingLog.records";
+
+  function loadSettings(){
+    try{ return JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {}; }catch(e){ return {}; }
+  }
+  function saveSettings(s){ localStorage.setItem(SETTINGS_KEY, JSON.stringify(s)); }
+  function loadRecords(){
+    try{ return JSON.parse(localStorage.getItem(RECORDS_KEY)) || []; }catch(e){ return []; }
+  }
+  function saveRecords(r){ localStorage.setItem(RECORDS_KEY, JSON.stringify(r)); }
+
+  let settings = loadSettings();
+  let records = loadRecords();
+  let editingId = null;
+
+  const heightInput = document.getElementById("height-input");
+  heightInput.value = settings.height || "";
+  heightInput.addEventListener("change", () => {
+    settings.height = heightInput.value ? parseFloat(heightInput.value) : null;
+    saveSettings(settings);
+    updateBmiPreview();
+  });
+
+  const weightInput = document.getElementById("f-weight");
+  const bmiValueEl = document.getElementById("bmi-value");
+  function calcBmi(weight, heightCm){
+    if(!weight || !heightCm) return null;
+    const h = heightCm / 100;
+    return Math.round((weight / (h*h)) * 10) / 10;
+  }
+  function updateBmiPreview(){
+    const w = parseFloat(weightInput.value);
+    const bmi = calcBmi(w, settings.height);
+    bmiValueEl.textContent = bmi !== null ? bmi : "-";
+  }
+  weightInput.addEventListener("input", updateBmiPreview);
+
+  // ---- dynamic rows (meals / trainings) ----
+  function createDynRow(container, timeVal, textVal, placeholder){
+    const row = document.createElement("div");
+    row.className = "dyn-row";
+    row.innerHTML = `
+      <input type="time" value="${timeVal || ""}">
+      <input type="text" placeholder="${placeholder}" value="${(textVal||"").replace(/"/g,'&quot;')}">
+      <button type="button" class="remove-btn">削除</button>
+    `;
+    row.querySelector(".remove-btn").addEventListener("click", () => row.remove());
+    container.appendChild(row);
+  }
+  const mealsContainer = document.getElementById("meals-container");
+  const trainingsContainer = document.getElementById("trainings-container");
+  document.getElementById("add-meal-btn").addEventListener("click", () => createDynRow(mealsContainer, "", "", "例: 鶏胸肉のサラダ、ごはん150g"));
+  document.getElementById("add-training-btn").addEventListener("click", () => createDynRow(trainingsContainer, "", "", "例: スクワット 3セット x 10回"));
+
+  function collectDynRows(container){
+    return Array.from(container.querySelectorAll(".dyn-row")).map(row => {
+      const inputs = row.querySelectorAll("input");
+      return { time: inputs[0].value, content: inputs[1].value };
+    }).filter(item => item.time || item.content);
+  }
+
+  // ---- form helpers ----
+  const form = document.getElementById("record-form");
+  const dateInput = document.getElementById("f-date");
+  const cancelBtn = document.getElementById("cancel-edit-btn");
+  const submitBtn = document.getElementById("submit-btn");
+  const formTitle = document.getElementById("form-title");
+
+  function resetForm(){
+    form.reset();
+    mealsContainer.innerHTML = "";
+    trainingsContainer.innerHTML = "";
+    createDynRow(mealsContainer, "", "", "例: 鶏胸肉のサラダ、ごはん150g");
+    createDynRow(trainingsContainer, "", "", "例: スクワット 3セット x 10回");
+    updateBmiPreview();
+    editingId = null;
+    cancelBtn.style.display = "none";
+    submitBtn.textContent = "記録を保存";
+    formTitle.textContent = "📝 記録を入力";
+    const today = new Date();
+    dateInput.value = today.toISOString().slice(0,10);
+  }
+
+  function fillFormFromRecord(rec){
+    dateInput.value = rec.date;
+    document.getElementById("f-bp-sys").value = rec.bpSys ?? "";
+    document.getElementById("f-bp-dia").value = rec.bpDia ?? "";
+    document.getElementById("f-pulse").value = rec.pulse ?? "";
+    document.getElementById("f-weight").value = rec.weight ?? "";
+    document.getElementById("f-bodyfat").value = rec.bodyFat ?? "";
+    document.getElementById("f-temp").value = rec.temperature ?? "";
+    document.getElementById("f-steps").value = rec.steps ?? "";
+    document.getElementById("f-sleep-hours").value = rec.sleepHours ?? "";
+    document.getElementById("f-sleep-quality").value = rec.sleepQuality ?? "";
+    const bs = rec.bodySize || {};
+    document.getElementById("f-bust").value = bs.bust ?? "";
+    document.getElementById("f-underbust").value = bs.underBust ?? "";
+    document.getElementById("f-waist").value = bs.waist ?? "";
+    document.getElementById("f-hip").value = bs.hip ?? "";
+    document.getElementById("f-thigh-l").value = bs.thighL ?? "";
+    document.getElementById("f-thigh-r").value = bs.thighR ?? "";
+    document.getElementById("f-calf-l").value = bs.calfL ?? "";
+    document.getElementById("f-calf-r").value = bs.calfR ?? "";
+    document.getElementById("f-arm-l").value = bs.armL ?? "";
+    document.getElementById("f-arm-r").value = bs.armR ?? "";
+    document.getElementById("f-memo").value = rec.memo ?? "";
+
+    mealsContainer.innerHTML = "";
+    trainingsContainer.innerHTML = "";
+    (rec.meals && rec.meals.length ? rec.meals : [{time:"",content:""}]).forEach(m => createDynRow(mealsContainer, m.time, m.content, "例: 鶏胸肉のサラダ、ごはん150g"));
+    (rec.trainings && rec.trainings.length ? rec.trainings : [{time:"",content:""}]).forEach(t => createDynRow(trainingsContainer, t.time, t.content, "例: スクワット 3セット x 10回"));
+
+    updateBmiPreview();
+    editingId = rec.id;
+    cancelBtn.style.display = "inline-block";
+    submitBtn.textContent = "更新を保存";
+    formTitle.textContent = "✏️ 記録を編集";
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  cancelBtn.addEventListener("click", resetForm);
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const numOrNull = (id) => {
+      const v = document.getElementById(id).value;
+      return v === "" ? null : parseFloat(v);
+    };
+    const weight = numOrNull("f-weight");
+    const bmi = calcBmi(weight, settings.height);
+
+    const rec = {
+      id: editingId || (Date.now().toString(36) + Math.random().toString(36).slice(2,7)),
+      date: dateInput.value,
+      bpSys: numOrNull("f-bp-sys"),
+      bpDia: numOrNull("f-bp-dia"),
+      pulse: numOrNull("f-pulse"),
+      weight: weight,
+      bodyFat: numOrNull("f-bodyfat"),
+      bmi: bmi,
+      temperature: numOrNull("f-temp"),
+      steps: numOrNull("f-steps"),
+      sleepHours: numOrNull("f-sleep-hours"),
+      sleepQuality: document.getElementById("f-sleep-quality").value || null,
+      bodySize: {
+        bust: numOrNull("f-bust"),
+        underBust: numOrNull("f-underbust"),
+        waist: numOrNull("f-waist"),
+        hip: numOrNull("f-hip"),
+        thighL: numOrNull("f-thigh-l"),
+        thighR: numOrNull("f-thigh-r"),
+        calfL: numOrNull("f-calf-l"),
+        calfR: numOrNull("f-calf-r"),
+        armL: numOrNull("f-arm-l"),
+        armR: numOrNull("f-arm-r"),
+      },
+      meals: collectDynRows(mealsContainer),
+      trainings: collectDynRows(trainingsContainer),
+      memo: document.getElementById("f-memo").value || ""
+    };
+
+    if(editingId){
+      records = records.map(r => r.id === editingId ? rec : r);
+    } else {
+      records.push(rec);
+    }
+    records.sort((a,b) => a.date < b.date ? 1 : -1);
+    saveRecords(records);
+    resetForm();
+    renderList();
+  });
+
+  // ---- list rendering with previous-day comparison ----
+  function findPrevRecord(rec){
+    // most recent record strictly before this one's date
+    const earlier = records.filter(r => r.id !== rec.id && r.date < rec.date);
+    if(earlier.length === 0) return null;
+    return earlier.reduce((a,b) => (a.date > b.date ? a : b));
+  }
+
+  function diffHtml(cur, prev, unit){
+    if(cur === null || cur === undefined || prev === null || prev === undefined) return "";
+    const d = Math.round((cur - prev) * 100) / 100;
+    if(d === 0) return `<span class="diff flat">±0${unit}</span>`;
+    const cls = d > 0 ? "up" : "down";
+    const arrow = d > 0 ? "▲" : "▼";
+    return `<span class="diff ${cls}">${arrow}${Math.abs(d)}${unit}</span>`;
+  }
+
+  function metricBlock(label, cur, prev, unit){
+    if(cur === null || cur === undefined) return "";
+    const cmp = prev ? diffHtml(cur, prev, unit) : "";
+    return `<div class="metric"><span class="label">${label}</span><span class="value">${cur}${unit}${cmp}</span></div>`;
+  }
+
+  function escapeHtml(str){
+    return (str || "").replace(/[&<>"']/g, s => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[s]));
+  }
+
+  function renderList(){
+    const listEl = document.getElementById("records-list");
+    const emptyEl = document.getElementById("empty-msg");
+    if(records.length === 0){
+      listEl.innerHTML = "";
+      emptyEl.style.display = "block";
+      return;
+    }
+    emptyEl.style.display = "none";
+    listEl.innerHTML = records.map(rec => {
+      const prev = findPrevRecord(rec);
+      const bs = rec.bodySize || {};
+      const bsItems = [
+        ["バスト", bs.bust], ["アンダーバスト", bs.underBust], ["ウエスト", bs.waist], ["ヒップ", bs.hip],
+        ["太もも(左)", bs.thighL], ["太もも(右)", bs.thighR], ["ふくらはぎ(左)", bs.calfL], ["ふくらはぎ(右)", bs.calfR],
+        ["二の腕(左)", bs.armL], ["二の腕(右)", bs.armR]
+      ].filter(([,v]) => v !== null && v !== undefined);
+
+      const bp = (rec.bpSys !== null && rec.bpDia !== null) ? `${rec.bpSys}/${rec.bpDia}` : (rec.bpSys ?? rec.bpDia ?? null);
+      const bpPrev = prev && prev.bpSys !== null && prev.bpDia !== null ? `${prev.bpSys}/${prev.bpDia}` : null;
+
+      const metrics = [
+        metricBlock("体重", rec.weight, prev && prev.weight, "kg"),
+        metricBlock("体脂肪率", rec.bodyFat, prev && prev.bodyFat, "%"),
+        metricBlock("BMI", rec.bmi, prev && prev.bmi, ""),
+        metricBlock("脈拍", rec.pulse, prev && prev.pulse, "回/分"),
+        rec.temperature !== null ? metricBlock("体温", rec.temperature, prev && prev.temperature, "℃") : "",
+        rec.steps !== null ? metricBlock("歩数", rec.steps, prev && prev.steps, "歩") : "",
+        rec.sleepHours !== null ? metricBlock("睡眠", rec.sleepHours, prev && prev.sleepHours, "h") : "",
+      ].join("");
+
+      const bpMetric = bp !== null ? `<div class="metric"><span class="label">血圧</span><span class="value">${bp} mmHg</span></div>` : "";
+
+      const mealsHtml = (rec.meals && rec.meals.length)
+        ? `<ul class="simple-list">${rec.meals.map(m => `<li>${m.time ? `<b>${m.time}</b> ` : ""}${escapeHtml(m.content)}</li>`).join("")}</ul>`
+        : `<p style="color:var(--muted);font-size:.8rem;">記録なし</p>`;
+      const trainingsHtml = (rec.trainings && rec.trainings.length)
+        ? `<ul class="simple-list">${rec.trainings.map(t => `<li>${t.time ? `<b>${t.time}</b> ` : ""}${escapeHtml(t.content)}</li>`).join("")}</ul>`
+        : `<p style="color:var(--muted);font-size:.8rem;">記録なし</p>`;
+
+      return `
+      <div class="record">
+        <div class="record-head">
+          <div class="record-date">${rec.date}</div>
+          <div class="record-actions">
+            <button type="button" onclick="TL.edit('${rec.id}')">編集</button>
+            <button type="button" onclick="TL.remove('${rec.id}')">削除</button>
+          </div>
+        </div>
+        <div class="metrics-row">${bpMetric}${metrics}</div>
+        <details>
+          <summary>詳細を見る（ボディサイズ・食事・トレーニング・メモ）</summary>
+          ${bsItems.length ? `<div class="detail-grid">${bsItems.map(([l,v]) => `<div><span>${l}</span>${v}cm</div>`).join("")}</div>` : ""}
+          <div class="subgroup-title" style="margin-top:10px;">食事内容と時間</div>
+          ${mealsHtml}
+          <div class="subgroup-title" style="margin-top:10px;">トレーニング内容と時間</div>
+          ${trainingsHtml}
+          ${rec.memo ? `<div class="memo-box"><b>体調メモ:</b> ${escapeHtml(rec.memo)}</div>` : ""}
+        </details>
+      </div>`;
+    }).join("");
+  }
+
+  window.TL = {
+    edit(id){
+      const rec = records.find(r => r.id === id);
+      if(rec) fillFormFromRecord(rec);
+    },
+    remove(id){
+      if(!confirm("この記録を削除しますか？")) return;
+      records = records.filter(r => r.id !== id);
+      saveRecords(records);
+      if(editingId === id) resetForm();
+      renderList();
+    }
+  };
+
+  // ---- export / import ----
+  document.getElementById("export-json-btn").addEventListener("click", () => {
+    const blob = new Blob([JSON.stringify({settings, records}, null, 2)], {type: "application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `training_log_${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  document.getElementById("export-csv-btn").addEventListener("click", () => {
+    const header = ["日付","血圧上","血圧下","脈拍","体重","体脂肪率","BMI","体温","歩数","睡眠時間","睡眠の質",
+      "バスト","アンダーバスト","ウエスト","ヒップ","太もも左","太もも右","ふくらはぎ左","ふくらはぎ右","二の腕左","二の腕右",
+      "食事内容","トレーニング内容","体調メモ"];
+    const rows = records.map(r => {
+      const bs = r.bodySize || {};
+      const meals = (r.meals||[]).map(m => `${m.time||""} ${m.content||""}`.trim()).join(" / ");
+      const trainings = (r.trainings||[]).map(t => `${t.time||""} ${t.content||""}`.trim()).join(" / ");
+      return [r.date, r.bpSys, r.bpDia, r.pulse, r.weight, r.bodyFat, r.bmi, r.temperature, r.steps, r.sleepHours, r.sleepQuality,
+        bs.bust, bs.underBust, bs.waist, bs.hip, bs.thighL, bs.thighR, bs.calfL, bs.calfR, bs.armL, bs.armR,
+        meals, trainings, r.memo]
+        .map(v => v === null || v === undefined ? "" : `"${String(v).replace(/"/g,'""')}"`).join(",");
+    });
+    const csv = "﻿" + [header.join(","), ...rows].join("\n");
+    const blob = new Blob([csv], {type: "text/csv"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `training_log_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  const importFile = document.getElementById("import-file");
+  document.getElementById("import-btn").addEventListener("click", () => importFile.click());
+  importFile.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try{
+        const data = JSON.parse(ev.target.result);
+        if(data.records && Array.isArray(data.records)){
+          if(confirm(`${data.records.length}件の記録をインポートします。既存データに追加されます。よろしいですか？`)){
+            const existingIds = new Set(records.map(r => r.id));
+            data.records.forEach(r => { if(!existingIds.has(r.id)) records.push(r); });
+            records.sort((a,b) => a.date < b.date ? 1 : -1);
+            saveRecords(records);
+            if(data.settings && data.settings.height && !settings.height){
+              settings.height = data.settings.height;
+              saveSettings(settings);
+              heightInput.value = settings.height;
+            }
+            renderList();
+            alert("インポートが完了しました。");
+          }
+        } else {
+          alert("正しい形式のJSONファイルではありません。");
+        }
+      }catch(err){
+        alert("ファイルの読み込みに失敗しました: " + err.message);
+      }
+      importFile.value = "";
+    };
+    reader.readAsText(file);
+  });
+
+  // ---- init ----
+  resetForm();
+  renderList();
+})();
+</script>
+</body>
+</html>
